@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C：最終｜ジブリ作品の可視化</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>C：最終（探索用ダッシュボード）</h1>
+        <div class="subtitle">
+          指標の切り替え・監督フィルタ・公開年レンジを使って、評価と興行収入の見え方がどう変わるかを探索する。
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./index.html">Top</a>
+        <a href="./a.html">A：静的</a>
+        <a href="./b.html">B：動的</a>
+      </nav>
+    </div>
+
+    <div class="row two">
+      <div class="card">
+        <h2>操作</h2>
+        <p>条件を変えながら散布図を比較する。</p>
+        <div class="hr"></div>
+
+        <div class="controls">
+          <div class="control">
+            <label for="xSelect">x軸</label>
+            <select id="xSelect">
+              <option value="duration_min">上映時間（分）</option>
+              <option value="worldwide_gross_musd">世界興収（百万$）</option>
+              <option value="year">公開年</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="yearMin">公開年（最小）</label>
+            <input id="yearMin" type="range" min="1984" max="2020" step="1" value="1984"/>
+          </div>
+
+          <div class="control">
+            <label for="yearMax">公開年（最大）</label>
+            <input id="yearMax" type="range" min="1984" max="2020" step="1" value="2020"/>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div id="directorFilters" class="controls" style="align-items:center;"></div>
+
+        <div class="hr"></div>
+        <div class="small" id="status"></div>
+
+        <div class="footerNote">
+          追加操作：散布図上でドラッグすると範囲選択（brush）ができ、選択した作品だけが右の表に表示される。
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>選択した作品の一覧</h2>
+        <p>brushで拾った作品を確認する。</p>
+        <div class="hr"></div>
+        <div style="overflow:auto; max-height: 420px;">
+          <table class="table" id="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Director</th>
+                <th>Rating</th>
+                <th>Gross</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="footerNote">
+          表は最大30件まで表示。条件が厳しすぎる場合はフィルタを緩める。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>散布図（y軸：評価固定）</h2>
+      <p>x軸は選択した指標。点の色は監督で分ける。</p>
+      <div class="hr"></div>
+      <div id="chart"></div>
+    </div>
+  </div>
+
+  <script src="./js/c_dashboard.js"></script>
+</body>
+</html>
